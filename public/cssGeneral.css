@@ -46,10 +46,10 @@ header img{
     float: left ; 
     text-align: center;
     width: 250px;
-    border: 1px solid #600 ; 
+    border: 1px solid rgb(5, 0, 102) ; 
     margin-right: 1px ; 
-    color: #fff ; 
-    background: #ccff11 ;
+    color: #f1ec88 ; 
+    background: #a0cbf2 ;
 }
 
 #menu li a , #categories li a {
@@ -70,10 +70,10 @@ header img{
 
 #visite aside ul li {
     list-style: none;
-    border:1px solid #600;
+    border:1px solid rgb(5, 0, 102);
     width:100px;
     text-align:center;
-    background:#ccff11;
+    background:#a0cbf2;
 }
 
 #visite section {

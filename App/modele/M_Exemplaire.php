@@ -15,10 +15,24 @@ class M_Exemplaire {
      * @return un tableau associatif
      */
     public static function trouveLesJeuxDeCategorie($idCategorie) {
-        $req = "SELECT * FROM exemplaires WHERE categorie_id = '$idCategorie'";
+        $req = "SELECT * FROM exemplaires JOIN consoles ON consoles.id_console = exemplaires.id_console WHERE categorie_id = '$idCategorie'";
         $res = AccesDonnees::query($req);
         $lesLignes = $res->fetchAll();
         return $lesLignes;
+    }
+
+    /**
+     * Retourne sous forme de tableau associatif les jeux de la console passée en argument
+     *
+     * @param [int] $idConsole
+     * @return tableau des jeux par console
+     */
+    public static function trouveLesJeuxDeConsole($idConsole):array
+    {
+        $req = "SELECT * FROM exemplaires JOIN consoles ON consoles.id_console = exemplaires.id_console WHERE exemplaires.id_console = $idConsole";
+        $res = AccesDonnees::query($req);
+        $lesLignes = $res->fetchAll();
+        return $lesLignes; 
     }
 
     /**
@@ -40,5 +54,13 @@ class M_Exemplaire {
         }
         return $lesProduits;
     }
-
+public static function trouveTousLesJeux(){
+    $req = "SELECT description as jeu, prix, nom_categorie as categorie, nom_console as console FROM exemplaires JOIN categories ON categories.id = exemplaires.categorie_id 
+    JOIN consoles ON consoles.id_console = exemplaires.id_console;";
+    $res = AccesDonnees::query($req);
+    $lesLignes = $res->fetchAll();
+    return $lesLignes;
 }
+}
+
+

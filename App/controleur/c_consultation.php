@@ -1,17 +1,24 @@
 ﻿<?php
 include 'App/modele/M_categorie.php';
+include 'App/modele/M_console.php';
 include 'App/modele/M_exemplaire.php';
-
 /**
  * Controleur pour la consultation des exemplaires
  * @author Loic LOG
  */
 switch ($action) {
-    case 'voirJeux' :
+    case 'tousLesJeux':
+        $lesJeux = M_Exemplaire::trouveTousLesJeux();
+        break;
+    case 'voirJeuxParCategorie':
         $categorie = filter_input(INPUT_GET, 'categorie');
         $lesJeux = M_Exemplaire::trouveLesJeuxDeCategorie($categorie);
         break;
-    case 'ajouterAuPanier' :
+    case 'voirJeuxParConsole':
+        $console = filter_input(INPUT_GET, 'console');
+        $lesJeux = M_Exemplaire::trouveLesJeuxDeConsole($console);
+        break;
+    case 'ajouterAuPanier':
         $idJeu = filter_input(INPUT_GET, 'jeu');
         $categorie = filter_input(INPUT_GET, 'categorie');
         if (!ajouterAuPanier($idJeu)) {
@@ -27,3 +34,4 @@ switch ($action) {
 }
 
 $lesCategories = M_Categorie::trouveLesCategories();
+$lesConsoles = M_Console::trouveLesConsoles();
