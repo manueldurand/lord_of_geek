@@ -22,7 +22,7 @@ if (!$uc) {
     $action = 'tousLesJeux';
 }
 
-// Controleur principale
+// Controleur principal
 switch ($uc) {
     case 'accueil':
         include 'App/controleur/c_consultation.php';
@@ -36,7 +36,7 @@ switch ($uc) {
     case 'commander':
         include 'App/controleur/c_passerCommande.php';
         break;
-    case 'administrer' :
+    case 'inscription' :
         include 'App/controleur/c_monCompte.php';
         break;
     default:
