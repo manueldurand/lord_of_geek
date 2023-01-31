@@ -48,6 +48,7 @@ Prototype de Lord Of Geek (LOG)
                     break;
                 case 'inscription':
                         include('App/vue/v_form_inscription.php');
+                        break;
                 case 'connexion':
                     include('App/vue/v_form_connexion.php');
                 default:

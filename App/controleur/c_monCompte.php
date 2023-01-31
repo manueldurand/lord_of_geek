@@ -25,6 +25,9 @@ switch ($action) {
             $uc = '';
         }
         break;
+    case 'confirmer>Connexion':
+        $pseudo_client = trim(filter_input(INPUT_POST, 'pseudo_client'));
+        $mdp = filter_input(INPUT_POST, 'mdp_client');
 }
 
 

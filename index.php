@@ -39,6 +39,8 @@ switch ($uc) {
     case 'inscription' :
         include 'App/controleur/c_monCompte.php';
         break;
+    case 'connexion':
+        include 'App/controleur/c_monCompte.php';
     default:
         break;
 }

@@ -15,7 +15,7 @@ class M_Client
      */
     public static function trouveLeClient()
     {
-        $req = "SELECT * FROM client WHERE pseudo = $pseudo_client";
+        $req = "SELECT * FROM client WHERE pseudo_client = $pseudo_client";
         $res = AccesDonnees::query($req);
         $lesLignes = $res->fetchAll();
         return $lesLignes;
@@ -78,9 +78,6 @@ class M_Client
         
             $req = "insert into client(nomPrenom_Client, pseudo_client,mdp_client, email_client, adresse_client, cp_client, ville_client) values ('$nomPrenom_client', '$pseudo_client', '$mdp_client', '$email_client', '$adresse_client', '$cp_client', '$ville_client')";
             $res = AccesDonnees::exec($req);
-            var_dump($res);
-        
-
-       
+            // var_dump($res);    
     }
 }
