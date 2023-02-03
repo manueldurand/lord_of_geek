@@ -1,6 +1,8 @@
 <?php
 
 include 'App/modele/M_client.php';
+include ('App/modele/M_Pseudos.php');
+include ('App/modele/M_email_verif.php');
 
 /**
  * Controleur pour l'inscription
@@ -19,16 +21,33 @@ switch ($action) {
         if (count($errors) > 0) {
             // Si une erreur, on recommence
             afficheErreurs($errors);
-        } else {
-            M_Client::creerClient($nomPrenom_client, $pseudo_client, $mdp_client, $email_client, $adresse_client, $cp_client, $ville_client);
-            afficheMessage("Félicitations, votre compte a bien été créé");
-            $uc = '';
+        } else if(M_Pseudos::existePseudo($pseudo_client)){
+            afficheMessage("ce pseudo existe déjà, si c'est bien vous allez à la  page de connexion. Sinon veuillez choisir un autre pseudo.");
+            $uc = 'inscription';
+        } else if(M_Emails::existeEmail($email_client)){
+            afficheMessage("cet email existe déjà, si c'est bien vous allez à la  page de connexion. Sinon veuillez choisir une autre adresse mail.");
+            $uc = 'inscription';
+        }
+        else {
+            try {
+                M_Client::creerClient($nomPrenom_client, $pseudo_client, $mdp_client, $email_client, $adresse_client, $cp_client, $ville_client);
+                afficheMessage("Félicitations, votre compte a bien été créé") ;
+                $uc = '';
+            } catch (\PDOException $e) {
+                // echo $e;
+                afficheMessage("erreur, veuillez recommencer la saisie");
+                die;        
+            }            
         }
         break;
-    case 'confirmer>Connexion':
+    case 'confirmerConnexion':
         $pseudo_client = trim(filter_input(INPUT_POST, 'pseudo_client'));
-        $mdp = filter_input(INPUT_POST, 'mdp_client');
-}
+        $mdp_client = filter_input(INPUT_POST, 'mdp_client');
+        if(M_Client::clientExiste($pseudo_client)){
+            afficheMessage('existe');
+        } else afficheMessage('nexiste pas ');
+            
+        }
 
 
 

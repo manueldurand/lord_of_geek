@@ -13,9 +13,9 @@ class M_Client
      *
      * @return le tableau associatif du client-pseudo
      */
-    public static function trouveLeClient()
+    public static function trouveLeClient($id)
     {
-        $req = "SELECT * FROM client WHERE pseudo_client = $pseudo_client";
+        $req = "SELECT * FROM client WHERE pseudo_client = $id";
         $res = AccesDonnees::query($req);
         $lesLignes = $res->fetchAll();
         return $lesLignes;
@@ -65,19 +65,80 @@ class M_Client
         /**
      * Crée un nouveau client
      *
-     * Crée une client à partir des arguments validés passés en paramètre,
+     * Crée un client à partir des arguments validés passés en paramètre,
      * @param $nomPrenom_client
-     * @param $rue
-     * @param $cp
-     * @param $ville
-     * @param $mail
-     * @param $listJeux
+     * @param $pseudo_client
+     * @param $mdp_client
+     * @param $email_client
+     * @param $adresse_client
+     * @param $cp_client
+     * @param $ville_client
 
      */
     public static function creerClient($nomPrenom_client, $pseudo_client, $mdp_client, $email_client, $adresse_client, $cp_client, $ville_client) {
         
-            $req = "insert into client(nomPrenom_Client, pseudo_client,mdp_client, email_client, adresse_client, cp_client, ville_client) values ('$nomPrenom_client', '$pseudo_client', '$mdp_client', '$email_client', '$adresse_client', '$cp_client', '$ville_client')";
-            $res = AccesDonnees::exec($req);
-            // var_dump($res);    
+        $conn = AccesDonnees::getpdo();
+        $mdp_client = password_hash($mdp_client, PASSWORD_BCRYPT);
+            $req = "INSERT INTO client(nomPrenom_Client, pseudo_client, mdp_client, email_client, adresse_client, cp_client, ville_client) ";   
+            $req .= "VALUES (:nomPrenom_Client, :pseudo_client, :mdp_client, :email_client, :adresse_client, :cp_client, :ville_client)";
+            $statement = $conn->prepare($req);
+            $statement->bindParam(":nomPrenom_Client", $nomPrenom_client);
+            $statement->bindParam(":pseudo_client", $pseudo_client);
+            $statement->bindParam(":mdp_client", $mdp_client);
+            $statement->bindParam(":email_client", $email_client);
+            $statement->bindParam(":adresse_client", $adresse_client);
+            $statement->bindParam(":cp_client", $cp_client);
+            $statement->bindParam(":ville_client", $ville_client);
+            return $statement->execute();
+                
     }
+    public static function clientExiste($pseudo_client): bool
+    {
+        $conn = AccesDonnees::getPdo();
+        $sql = 'SELECT id_client FROM client ';
+        $sql .= 'WHERE pseudo_client = :login';
+
+        // prepare and bind
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":login", $pseudo_client);
+        // $stmt->bindParam(":mdp", $mdp_client);
+
+        // Exécution
+        $stmt->execute();
+
+        // L'identification est bonne si la requête a retourné
+        // une ligne (l'utilisateur existe et le mot de passe
+        // est bon).
+        // Si c'est le cas $existe contient 1, sinon elle est
+        // vide. Il suffit de la retourner en tant que booléen.
+        if ($stmt->rowCount() > 0) {
+            // ok, il existe
+            $existe = true;
+        } else {
+            $existe = false;
+        }
+        return $existe;
+    }
+
+    function checkMdp(String $pseudo_client, String $mdp_client)
+{
+    $conn = AccesDonnees::getPdo();
+    $sql = "SELECT id_client, mdp_client FROM client WHERE pseudo_client = :pseudo";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':pseudo', $pseudo_client);
+    $stmt->execute();
+
+    $data = $stmt->fetch();
+    
+    $mdp_bdd = $data['mdp_client'];
+
+    if(!password_verify($mdp_client, $mdp_bdd))
+    {
+        $data['id'] = false;
+    }
+
+    return $data['id'];
+
+}
+
 }

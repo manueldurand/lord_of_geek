@@ -41,6 +41,8 @@ switch ($uc) {
         break;
     case 'connexion':
         include 'App/controleur/c_monCompte.php';
+    case 'pseudos':
+        include 'App/controleur/c_pseudos.php';
     default:
         break;
 }

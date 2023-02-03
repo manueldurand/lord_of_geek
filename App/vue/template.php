@@ -22,6 +22,7 @@ Prototype de Lord Of Geek (LOG)
                     <li><a href="index.php?uc=inscription"> Inscription </a></li>
                     <li><a href="index.php?uc=connexion">Connexion</a></li>
                     <li><a href="index.php?uc=compte"> Mon compte </a></li>
+                    <li><a href="index.php?uc=pseudos&action=voirPseudos">pseudos enregistrés</a> </li>
                 </ul>
             </nav>
 
@@ -47,10 +48,12 @@ Prototype de Lord Of Geek (LOG)
                     include ("App/vue/v_compte.php");
                     break;
                 case 'inscription':
-                        include('App/vue/v_form_inscription.php');
-                        break;
+                    include('App/vue/v_form_inscription.php');
+                    break;
                 case 'connexion':
                     include('App/vue/v_form_connexion.php');
+                case 'pseudos':
+                    include('App/vue/v_afficher_clients.php');
                 default:
                     break;
             }

@@ -30,7 +30,7 @@ class AccesDonnees {
 
     /**
      * Fonction statique qui crée l'unique instance de la classe
-     * retourne l'unique objet de la classe
+     * retourne l'unique objet de la classe (design pattern : singleton)
      * @return PDO
      */
     public static function getPdo() {
