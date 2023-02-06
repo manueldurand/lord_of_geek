@@ -3,7 +3,6 @@
 include 'App/modele/M_client.php';
 include ('App/modele/M_Pseudos.php');
 include ('App/modele/M_email_verif.php');
-
 /**
  * Controleur pour l'inscription
  * @author Loic LOG
@@ -40,12 +39,20 @@ switch ($action) {
             }            
         }
         break;
+
     case 'confirmerConnexion':
+
         $pseudo_client = trim(filter_input(INPUT_POST, 'pseudo_client'));
         $mdp_client = filter_input(INPUT_POST, 'mdp_client');
-        if(M_Client::clientExiste($pseudo_client)){
-            afficheMessage('existe');
-        } else afficheMessage('nexiste pas ');
+
+        if(M_Client::clientExiste($pseudo_client) && (M_Client::checkMdp($pseudo_client, $mdp_client))){
+            $_SESSION['id'] = M_Client::checkMdp($pseudo_client, $mdp_client);
+            afficheMessage('bienvenue '.$pseudo_client);
+            $uc = '';
+
+            
+        }
+             else afficheMessage('Votre pseudo n\'est pas reconnu, veuillez réssesayer ');
             
         }
 

@@ -1,7 +1,7 @@
 <section>
     <fieldset>
         <legend>Entrez vous identifiants de connexion</legend>
-         <form action="index.php?uc=connexion&action=confirmerConnexion">
+         <form action="index.php?uc=connexion&action=confirmerConnexion" method="POST">
         <p>
         <label for="pseudo">pseudo : </label>
         <input type="text" id="pseudo" name="pseudo_client">

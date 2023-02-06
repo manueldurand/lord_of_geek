@@ -120,7 +120,7 @@ class M_Client
         return $existe;
     }
 
-    function checkMdp(String $pseudo_client, String $mdp_client)
+    public static function checkMdp(String $pseudo_client, String $mdp_client)
 {
     $conn = AccesDonnees::getPdo();
     $sql = "SELECT id_client, mdp_client FROM client WHERE pseudo_client = :pseudo";
@@ -134,10 +134,9 @@ class M_Client
 
     if(!password_verify($mdp_client, $mdp_bdd))
     {
-        $data['id'] = false;
+        $data['id_client'] = false;
     }
-
-    return $data['id'];
+    return $data['id_client'];
 
 }
 
