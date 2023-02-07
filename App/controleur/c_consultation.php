@@ -1,7 +1,7 @@
 ﻿<?php
-include 'App/modele/M_categorie.php';
-include 'App/modele/M_console.php';
-include 'App/modele/M_exemplaire.php';
+include_once 'App/modele/M_categorie.php';
+include_once 'App/modele/M_console.php';
+include_once 'App/modele/M_exemplaire.php';
 /**
  * Controleur pour la consultation des exemplaires
  * @author Loic LOG

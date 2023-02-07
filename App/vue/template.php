@@ -19,12 +19,14 @@ Prototype de Lord Of Geek (LOG)
                     <li><a href="index.php?uc=accueil&action=tousLesJeux"> Accueil </a></li>
                     <li><a href="index.php?uc=visite&action=voirCategories"> Tri par console ou par catégorie</a></li>
                     <li><a href="index.php?uc=panier&action=voirPanier"> Voir son panier </a></li>
-                    <li><a href="index.php?uc=inscription"> Inscription </a></li>
+                    <!-- <li><a href="index.php?uc=inscription"> Inscription </a></li> -->
+                    <?php if(!isset($_SESSION['id'])):?>
                     <li><a href="index.php?uc=connexion">Connexion</a></li>
-                    <?php if(isset($_SESSION['id'])){
-                        echo '<li><a href="index.php?uc=compte"> Mon compte </a></li>';
-                    }
-                    ?>
+                    <?php endif ?>
+                    <?php if(isset($_SESSION['id'])):?>
+                        <li><a href="index.php?uc=compte&action=consulter"> Mon compte </a></li>
+                        <li><a href="index.php?uc=deco">Déconnexion</a></li>
+                   <?php endif ?>
                 </ul>
             </nav>
 
@@ -54,6 +56,11 @@ Prototype de Lord Of Geek (LOG)
                     break;
                 case 'connexion':
                     include('App/vue/v_form_connexion.php');
+                    break;
+                case 'deco':
+                    include('App/vue/v_deconnexion.php');
+                case 'demander' :
+                    include ('App/vue/v_propose_compte.php');
                 default:
                     break;
             }

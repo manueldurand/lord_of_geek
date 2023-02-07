@@ -24,7 +24,7 @@
     <br>
     Total : <?= $prix_tot. " Euros"?>
     <br>
-    <a href=index.php?uc=commander&action=passerCommande>
+    <a href=index.php?uc=demander&action=proposeCompte>
         <img src="public/images/commander.jpg" title="Passer commande" >
     </a>
 </section>

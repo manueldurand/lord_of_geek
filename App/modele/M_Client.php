@@ -9,15 +9,15 @@ class M_Client
 {
 
     /**
-     * Retourne les données du client par pseudo sous forme d'un tableau associatif
+     * Retourne les données du client par id sous forme d'un tableau associatif
      *
      * @return le tableau associatif du client-pseudo
      */
     public static function trouveLeClient($id)
     {
-        $req = "SELECT * FROM client WHERE pseudo_client = $id";
+        $req = "SELECT * FROM client WHERE id_client = $id";
         $res = AccesDonnees::query($req);
-        $lesLignes = $res->fetchAll();
+        $lesLignes = $res->fetch();
         return $lesLignes;
     }
     /**
@@ -139,5 +139,11 @@ class M_Client
     return $data['id_client'];
 
 }
+
+    // public static function trouveLesCommandes($id)
+    // {
+    //     $conn = AccesDonnees::getPdo();
+    //     $sql = ""
+    // }
 
 }
