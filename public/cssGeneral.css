@@ -1,6 +1,8 @@
 body {
     width: 90% ; 
+    height : 100vh;
     margin: 0 5%; 
+    background-image: linear-gradient(to top, #d299c2 0%, #fef9d7 100%);
 }
 
 .add{
@@ -49,7 +51,8 @@ header img{
     border: 1px solid rgb(5, 0, 102) ; 
     margin-right: 1px ; 
     color: #f1ec88 ; 
-    background: #a0cbf2 ;
+    background: #ffffaa;
+    border-radius : 5px;
 }
 
 #menu li a , #categories li a {
