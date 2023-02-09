@@ -79,7 +79,7 @@ class M_Client
         
         $conn = AccesDonnees::getpdo();
         $mdp_client = password_hash($mdp_client, PASSWORD_BCRYPT);
-            $req = "INSERT INTO client(nomPrenom_Client, pseudo_client, mdp_client, email_client, adresse_client, cp_client, ville_client) ";   
+            $req = "INSERT INTO log_client(nomPrenom_Client, pseudo_client, mdp_client, email_client, adresse_client, cp_client, ville_client) ";   
             $req .= "VALUES (:nomPrenom_Client, :pseudo_client, :mdp_client, :email_client, :adresse_client, :cp_client, :ville_client)";
             $statement = $conn->prepare($req);
             $statement->bindParam(":nomPrenom_Client", $nomPrenom_client);

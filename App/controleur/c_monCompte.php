@@ -33,7 +33,7 @@ switch ($action) {
                 afficheMessage("Félicitations, votre compte a bien été créé");
                 $uc = '';
             } catch (\PDOException $e) {
-                // echo $e;
+                echo $e;
                 afficheMessage("erreur, veuillez recommencer la saisie");
                 die;
             }
