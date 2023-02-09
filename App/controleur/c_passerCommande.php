@@ -37,6 +37,13 @@ switch ($action) {
             afficheMessage("Commande enregistrée");
             $uc = '';
         }
+    case 'commandeClient':
+        $infos = M_Client::trouveLeClient($id);
+        
+
+        M_Commande::creerCommande($nom, $rue, $cp, $ville, $mail, $lesIdJeu);
+        
+        afficheMessage('Commande enregistrée');
         break;
 }
 

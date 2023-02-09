@@ -41,6 +41,7 @@ switch ($uc) {
         break;
     case 'connexion':
         include 'App/controleur/c_monCompte.php';
+        break;
     case 'deco':
         include 'App/controleur/c_monCompte.php';
         break;
