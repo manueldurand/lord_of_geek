@@ -3,6 +3,7 @@
 include_once 'App/modele/M_client.php';
 include_once('App/modele/M_Pseudos.php');
 include_once('App/modele/M_email_verif.php');
+include_once('App/modele/M_Commande.php');
 /**
  * Controleur pour l'inscription
  * @author Loic LOG
@@ -76,5 +77,5 @@ switch ($action) {
         case 'consulter':
             $id = $_SESSION['id'];
             $infos = M_Client::trouveLeClient($id);
-            // $commandes = M_Client::trouveLesCommandes($id);
+            $commandes = M_Commande::trouveLesCommandes($id);
 }

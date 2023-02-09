@@ -11,8 +11,8 @@ class M_Pseudos
     // }
     public static function existePseudo($pseudo_client){
         $conn = AccesDonnees::getpdo();
-        $stmt = $conn->prepare("SELECT * FROM client WHERE pseudo_client = :d" );
-        $stmt->bindParam(":d", $pseudo_client);
+        $stmt = $conn->prepare("SELECT * FROM client WHERE pseudo_client = :p" );
+        $stmt->bindParam(":p", $pseudo_client);
         $stmt->execute();
         $user = $stmt->fetch();
         if($user){

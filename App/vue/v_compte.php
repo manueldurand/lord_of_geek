@@ -13,4 +13,21 @@
     <li>Ville : <?=$infos['ville_client']?></li>
 </ul>
 <h2>Mes dernières commandes</h2>
+<table border="">
+    <tr>
+        <th>nom</th>
+        <th>console</th>
+        <th>catégorie</th>
+        <th>prix</th>
+    </tr>
+    <?php foreach($commandes as $commande): ?>
+        <tr>
+            <td><?= $commande['nom'];?></td>
+            <td><?= $commande['console'];?></td>
+            <td><?= $commande['categorie'];?></td>
+            <td><?= $commande['prix'];?></td>
+            <?php endforeach ?>
+
+        </tr>
+</table>
 

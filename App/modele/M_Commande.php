@@ -21,15 +21,33 @@ class M_Commande {
      * @param $listJeux
 
      */
-    public static function creerCommande($nom, $rue, $cp, $ville, $mail, $listJeux) {
-        $req = "insert into commandes(nomPrenomClient, adresseRueClient, cpClient, villeClient, mailClient) values ('$nom','$rue','$cp','$ville','$mail')";
-        $res = AccesDonnees::exec($req);
-        $idCommande = AccesDonnees::getPdo()->lastInsertId();
+    public static function creerCommande($id_client, $listJeux) {
+        $conn = AccesDonnees::getpdo();
         foreach ($listJeux as $jeu) {
-            $req = "insert into lignes_commande(commande_id, exemplaire_id) values ('$idCommande','$jeu')";
-            $res = AccesDonnees::exec($req);
+            
+            $stmt = $conn->prepare("insert into lignes_commande(client_id, exemplaire_id) values (:id_client, :jeu)");
+            $stmt->bindParam(":id_client", $id_client);
+            $stmt->bindParam(":jeu", $jeu);
+            $stmt->execute();
         }
+        
     }
+
+    public static function trouveLesCommandes($id){
+        $conn = AccesDonnees::getpdo();
+        $stmt = $conn->prepare("SELECT description as nom, prix, nom_console as console, nom_categorie as categorie FROM exemplaires
+        JOIN lignes_commande ON lignes_commande.exemplaire_id = exemplaires.id
+        JOIN categories ON categories.id = exemplaires.categorie_id
+        JOIN consoles ON consoles.id_console = exemplaires.id_console
+        JOIN client ON client.id_client = lignes_commande.client_id
+        WHERE id_client = :id_client;");
+        $stmt->bindParam("id_client", $id);
+        $stmt->execute();
+        $lesLignes = $stmt->fetchAll();
+        return $lesLignes;
+
+    }
+
 
     /**
      * Retourne vrai si pas d'erreur
