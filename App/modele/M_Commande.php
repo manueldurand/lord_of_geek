@@ -25,7 +25,7 @@ class M_Commande {
         $conn = AccesDonnees::getpdo();
         foreach ($listJeux as $jeu) {
             
-            $stmt = $conn->prepare("insert into lignes_commande(client_id, exemplaire_id) values (:id_client, :jeu)");
+            $stmt = $conn->prepare("insert into log_lignes_commande(client_id, exemplaire_id) values (:id_client, :jeu)");
             $stmt->bindParam(":id_client", $id_client);
             $stmt->bindParam(":jeu", $jeu);
             $stmt->execute();
@@ -35,11 +35,11 @@ class M_Commande {
 
     public static function trouveLesCommandes($id){
         $conn = AccesDonnees::getpdo();
-        $stmt = $conn->prepare("SELECT description as nom, prix, nom_console as console, nom_categorie as categorie FROM exemplaires
-        JOIN lignes_commande ON lignes_commande.exemplaire_id = exemplaires.id
-        JOIN categories ON categories.id = exemplaires.categorie_id
-        JOIN consoles ON consoles.id_console = exemplaires.id_console
-        JOIN client ON client.id_client = lignes_commande.client_id
+        $stmt = $conn->prepare("SELECT description as nom, prix, nom_console as console, nom_categorie as categorie FROM log_exemplaires
+        JOIN log_lignes_commande ON log_lignes_commande.exemplaire_id = log_exemplaires.id
+        JOIN log_categories ON log_categories.id = log_exemplaires.categorie_id
+        JOIN log_consoles ON log_consoles.id_console = log_exemplaires.id_console
+        JOIN log_client ON log_client.id_client = log_lignes_commande.client_id
         WHERE id_client = :id_client;");
         $stmt->bindParam("id_client", $id);
         $stmt->execute();

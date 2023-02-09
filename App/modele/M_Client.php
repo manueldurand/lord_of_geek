@@ -15,7 +15,7 @@ class M_Client
      */
     public static function trouveLeClient($id)
     {
-        $req = "SELECT * FROM client WHERE id_client = $id";
+        $req = "SELECT * FROM log_client WHERE id_client = $id";
         $res = AccesDonnees::query($req);
         $lesLignes = $res->fetch();
         return $lesLignes;
@@ -95,14 +95,12 @@ class M_Client
     public static function clientExiste($pseudo_client): bool
     {
         $conn = AccesDonnees::getPdo();
-        $sql = 'SELECT id_client FROM client ';
+        $sql = 'SELECT id_client FROM log_client ';
         $sql .= 'WHERE pseudo_client = :login';
-
         // prepare and bind
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(":login", $pseudo_client);
         // $stmt->bindParam(":mdp", $mdp_client);
-
         // Exécution
         $stmt->execute();
 
@@ -123,7 +121,7 @@ class M_Client
     public static function checkMdp(String $pseudo_client, String $mdp_client)
 {
     $conn = AccesDonnees::getPdo();
-    $sql = "SELECT id_client, mdp_client FROM client WHERE pseudo_client = :pseudo";
+    $sql = "SELECT id_client, mdp_client FROM log_client WHERE pseudo_client = :pseudo";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':pseudo', $pseudo_client);
     $stmt->execute();
@@ -139,11 +137,5 @@ class M_Client
     return $data['id_client'];
 
 }
-
-    // public static function trouveLesCommandes($id)
-    // {
-    //     $conn = AccesDonnees::getPdo();
-    //     $sql = ""
-    // }
 
 }

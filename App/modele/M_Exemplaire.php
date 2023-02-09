@@ -15,9 +15,11 @@ class M_Exemplaire {
      * @return un tableau associatif
      */
     public static function trouveLesJeuxDeCategorie($idCategorie) {
-        $req = "SELECT * FROM exemplaires JOIN consoles ON consoles.id_console = exemplaires.id_console WHERE categorie_id = '$idCategorie'";
-        $res = AccesDonnees::query($req);
-        $lesLignes = $res->fetchAll();
+        $conn = AccesDonnees::getpdo();
+        $stmt = $conn->prepare("SELECT * FROM log_exemplaires JOIN log_consoles ON log_consoles.id_console = log_exemplaires.id_console WHERE categorie_id = :idCategorie");
+        $stmt->bindParam(':idCategorie', $idCategorie);
+        $stmt->execute();
+        $lesLignes = $stmt->fetchAll();
         return $lesLignes;
     }
 
@@ -29,10 +31,15 @@ class M_Exemplaire {
      */
     public static function trouveLesJeuxDeConsole($idConsole):array
     {
-        $req = "SELECT * FROM exemplaires JOIN consoles ON consoles.id_console = exemplaires.id_console WHERE exemplaires.id_console = $idConsole";
-        $res = AccesDonnees::query($req);
-        $lesLignes = $res->fetchAll();
-        return $lesLignes; 
+        $conn = AccesDonnees::getPdo();
+        $stmt = $conn->prepare("SELECT * FROM log_exemplaires 
+        JOIN log_consoles 
+        ON log_consoles.id_console = log_exemplaires.id_console 
+        WHERE log_exemplaires.id_console = :idConsole");
+        $stmt->bindParam(':idConsole', $idConsole);
+        $stmt->execute();
+        $lesLignes = $stmt->fetchAll();
+        return $lesLignes;
     }
 
     /**
@@ -45,18 +52,20 @@ class M_Exemplaire {
         $nbProduits = count($desIdJeux);
         $lesProduits = array();
         if ($nbProduits != 0) {
+            $conn = AccesDonnees::getPdo();
             foreach ($desIdJeux as $unIdProduit) {
-                $req = "SELECT * FROM exemplaires WHERE id = '$unIdProduit'";
-                $res = AccesDonnees::query($req);
-                $unProduit = $res->fetch();
+                $stmt = $conn->prepare("SELECT * FROM log_exemplaires WHERE id = :unIdProduit");
+                $stmt->bindParam(':unIdProduit', $unIdProduit);
+                $stmt->execute();
+                $unProduit = $stmt->fetch();
                 $lesProduits[] = $unProduit;
             }
         }
         return $lesProduits;
     }
 public static function trouveTousLesJeux(){
-    $req = "SELECT description as jeu, prix, nom_categorie as categorie, nom_console as console FROM exemplaires JOIN categories ON categories.id = exemplaires.categorie_id 
-    JOIN consoles ON consoles.id_console = exemplaires.id_console;";
+    $req = "SELECT description as jeu, prix, nom_categorie as categorie, nom_console as console FROM log_exemplaires JOIN log_categories ON log_categories.id = log_exemplaires.categorie_id 
+    JOIN log_consoles ON log_consoles.id_console = log_exemplaires.id_console;";
     $res = AccesDonnees::query($req);
     $lesLignes = $res->fetchAll();
     return $lesLignes;

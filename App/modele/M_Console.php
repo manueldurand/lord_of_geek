@@ -13,7 +13,7 @@ class M_Console {
      * @return le tableau associatif des catégories
      */
     public static function trouveLesConsoles() {
-        $req = "SELECT * FROM consoles";
+        $req = "SELECT * FROM log_consoles";
         $res = AccesDonnees::query($req);
         $lesLignes = $res->fetchAll();
         return $lesLignes;
